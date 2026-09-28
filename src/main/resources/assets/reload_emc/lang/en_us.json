@@ -1,0 +1,5 @@
+{
+    "command.reload_emc.notice": "Restart or use \"/projecte reloademc\" when all changes are complete.",
+    "command.reload_emc.started": "Reloading EMC values, expect lag.",
+    "command.reload_emc.success": "EMC reload complete. Sending updated data to clients."
+}
