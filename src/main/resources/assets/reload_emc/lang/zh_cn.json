@@ -1,0 +1,5 @@
+{
+    "command.reload_emc.notice": "刷新完成后，请重启游戏或使用\"/projecte reloademc\"指令。",
+    "command.reload_emc.started": "正在刷新EMC值...",
+    "command.reload_emc.success": "刷新完成！更新数据已发送至客户端。"
+}
