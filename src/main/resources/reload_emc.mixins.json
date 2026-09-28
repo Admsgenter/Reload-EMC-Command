@@ -1,0 +1,9 @@
+{
+    "required": true,
+    "minVersion": "0.8",
+    "package": "admsgenter.reload_emc.mixin",
+    "compatibilityLevel": "JAVA_8",
+    "refmap": "reload_emc.refmap.json",
+    "mixins": [ "CMDMixin" ],
+    "injectors": { "defaultRequire": 1 }
+}
