@@ -1,24 +1,26 @@
 buildscript {
     repositories {
+        maven { url = 'https://maven.minecraftforge.net' }
         maven { url = 'https://repo.spongepowered.org/repository/maven-public/' }
         mavenCentral()
     }
     dependencies {
-        classpath 'org.spongepowered:mixingradle:0.7-SNAPSHOT'
+        classpath group: 'net.minecraftforge.gradle', name: 'ForgeGradle', version: '5.1.+', changing: true
+        classpath 'org.spongepowered:mixingradle:0.7.+'
     }
 }
 
 plugins {
-    id 'eclipse'
     id 'idea'
     id 'net.minecraftforge.gradle' version '[6.0.16,6.2)'
 }
 
+apply plugin: 'net.minecraftforge.gradle'
 apply plugin: 'org.spongepowered.mixin'
 
 group = mod_group_id
 version = mod_version
-base.archivesName = mod_name+"-1.16.5"
+base.archivesName = mod_name+"-1.14.4"
 java.toolchain.languageVersion = JavaLanguageVersion.of(8)
 
 minecraft {
@@ -27,7 +29,7 @@ minecraft {
 
     runs {
         configureEach {
-            workingDirectory project.file('run')
+            workingDirectory file('run')
             property 'forge.logging.markers', 'REGISTRIES'
             property 'forge.logging.console.level', 'debug'
 
@@ -56,13 +58,10 @@ repositories {
 dependencies {
     minecraft "net.minecraftforge:forge:${minecraft_version}-${forge_version}"
     annotationProcessor 'org.spongepowered:mixin:0.8.7:processor'
-    implementation fg.deobf("curse.maven:projecte-226410:3736621")
+    implementation 'org.spongepowered:mixin:0.8.7'
+    implementation fg.deobf("curse.maven:projecte-226410:2855942")
 }
 
-processResources {
-    filesMatching(['META-INF/mods.toml']) { expand project.properties }
-}
+processResources.filesMatching(['META-INF/mods.toml']) { expand project.properties }
 
-jar {
-    finalizedBy 'reobfJar'
-}
+jar.finalizedBy('reobfJar')

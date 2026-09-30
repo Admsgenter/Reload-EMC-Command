@@ -10,9 +10,9 @@ import net.minecraft.command.Commands;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TranslationTextComponent;
-import net.minecraftforge.event.RegisterCommandsEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
+import net.minecraftforge.fml.event.server.FMLServerStartingEvent;
 import net.minecraftforge.fml.server.ServerLifecycleHooks;
 
 @Mod("reload_emc")
@@ -23,15 +23,15 @@ public class ReloadEMC {
     private static final ITextComponent 完成重载 = new TranslationTextComponent("command.reload_emc.success");
 
     @SubscribeEvent
-    public static void 指令(final RegisterCommandsEvent 事件) {
-        事件.getDispatcher().register(Commands.literal("projecte").then(Commands.literal("reloademc").requires(执行者 -> 执行者.hasPermission(2)).executes(指令 -> {
+    public static void 指令(final FMLServerStartingEvent 事件) {
+        事件.getCommandDispatcher().register(Commands.literal("projecte").then(Commands.literal("reloademc").requires(执行者 -> 执行者.hasPermission(2)).executes(指令 -> {
             指令.getSource().sendSuccess(正在重载, true);
             long 时间 = System.currentTimeMillis();
             AbstractNSSTag.clearCreatedTags();
             CustomEMCParser.init();
             MinecraftServer 服务器 = ServerLifecycleHooks.getCurrentServer();
             try {
-                EMCMappingHandler.map(服务器.getDataPackRegistries(), 服务器.getDataPackRegistries().getResourceManager());
+                EMCMappingHandler.map(服务器.getResources());
                 PECore.LOGGER.info("Registered {} EMC values. (took {} ms)", EMCMappingHandler.getEmcMapSize(), System.currentTimeMillis()-时间);
                 PacketHandler.sendFragmentedEmcPacketToAll();
             } catch(Throwable t) { PECore.LOGGER.error("Error calculating EMC values", t); }
